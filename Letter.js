@@ -5,9 +5,9 @@ class Letter {
     };
     toString() {
         if (this.guessed) {
-            return this.letter;
+            return (` ${this.letter} `);
         } else {
-            return "_ ";
+            return " _ ";
         }
     };
     guessedIt(userGuess) {

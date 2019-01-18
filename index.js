@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const Word = require('./Word');
 const Wordbank = require('./Wordbank');
+let wonGame = false;
 
 
 function startGame() {
@@ -20,33 +21,52 @@ function startGame() {
 
 function getWord() {
     let currentWord = new Word(Wordbank[Math.floor(Math.random() * Wordbank.length)]);
-    console.log(currentWord.concatenate());
-    getGuess();
-    checkGuess();
+    console.log(`
+    ${currentWord.concatenate()}
+    `);
+    getGuess(currentWord);
 };
 
 function updateWord(currentWord) {
-    console.log(currentWord.concatenate());
+    console.log(`
+    ${currentWord.concatenate()}
+    `);
+    checkForWin(currentWord);
 }
 
-function getGuess() {
+function getGuess(currentWord) {
     inquirer.prompt({
         name: 'userGuess',
         type: 'input',
         message: 'Please guess a letter...'
     }).then(res => {
         userGuess = res.userGuess;
-        checkGuess(userGuess);
+        console.log(`You guessed: ${res.userGuess}`);
+        checkGuess(currentWord, userGuess);
     })
 };
 
 function checkGuess(currentWord, userGuess) {
-    console.log(currentWord);
-    console.log(userGuess);
-    //currentWord.guessed(userGuess);
-    //updateWord();
-}
+    currentWord.guessed(userGuess);
+    for (let i = 0; i < currentWord.wordArray.length; i++) {
+        if (currentWord.wordArray[i].guessed) {
+            console.log(`${currentWord.wordArray[i]}is correct!`);
 
+        } else {
+            //count--;
+        }
 
+    }
+    updateWord(currentWord);
+};
+
+function checkForWin(currentWord) {
+    if (currentWord.wordArray.toString().includes('_')) {
+        getGuess(currentWord);
+    } else {
+        console.log('You Won');
+        startGame();
+    }
+};
 
 startGame();

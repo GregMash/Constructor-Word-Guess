@@ -13,8 +13,6 @@ class Word {
     guessed(userGuess) {
         this.wordArray.forEach(value => {
             value.guessedIt(userGuess);
-            console.log(userGuess);
-            console.log(value);
         });
     }
 };
