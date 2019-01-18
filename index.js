@@ -2,7 +2,7 @@
 const inquirer = require('inquirer');
 const Word = require('./Word');
 const Wordbank = require('./Wordbank');
-let count = 10;
+let count = 7;
 let userGuesses = [];
 
 //================================= Functions ====================================
@@ -30,7 +30,7 @@ function getWord() {
     console.log(`
     ${currentWord.concatenate()}
     `);
-    count = 10;
+    count = 7;
     getGuess(currentWord);
 };
 
@@ -50,12 +50,18 @@ function getGuess(currentWord) {
         message: 'Please guess a letter...'
     }).then(res => {
         console.clear();
-        userGuess = res.userGuess;
-        userGuesses.push(userGuess);
-        console.log(`
+        userGuess = res.userGuess.toLowerCase();
+        if (userGuess.length === 1 && /^[a-z]+$/i.test(userGuess)) {
+            userGuesses.push(userGuess);
+            console.log(`
 You guessed: ${res.userGuess}
+
 You have guessed: ${userGuesses}`);
-        checkGuess(currentWord, userGuess);
+            checkGuess(currentWord, userGuess);
+        } else {
+            console.log("Please enter only one letter");
+            getGuess(currentWord);
+        };
     })
 };
 
