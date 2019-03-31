@@ -26,8 +26,6 @@ You will be prompted to play the Hangman game!
 
  - Javascript
  - NodeJS
- - MySQL
- - DotEnv
  - Inquirer
 
 
